@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t arcmistrz/react-tests -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run -e CI=true arcmistrz/react-tests npm run test
+
+after_success:
+  - docker build -t arcmistrz/multi-client ./client
+  - docker build -t arcmistrz/multi-nginx ./nginx
+  - docker build -t arcmistrz/multi-server ./server
+  - docker build -t arcmistrz/multi-worker ./worker
+
