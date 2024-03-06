@@ -13,4 +13,8 @@ after_success:
   - docker build -t arcmistrz/multi-nginx ./nginx
   - docker build -t arcmistrz/multi-server ./server
   - docker build -t arcmistrz/multi-worker ./worker
-
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push arcmistrz/multi-client
+  - docker push arcmistrz/multi-nginx
+  - docker push arcmistrz/multi-server
+  - docker push arcmistrz/multi-worker
